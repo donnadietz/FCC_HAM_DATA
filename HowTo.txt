@@ -1,0 +1,34 @@
+from wireless.fcc.gov/uls/index.htm?job=transaction&page=weekly
+grab a_amat.zip and l_amat.zip
+unzip, put in same common folder.
+
+Make note of last date pull and current file date (website)
+
+Files needed:
+
+Process_data.py
+label.tex
+hamFCC2.py
+MakeZipLists.py
+newaddress.py
+newgrants.py
+unzipzips.py
+zips.csv
+
+python3
+20700 will be default.  used 17 mile radius.
+This code cuts out DC/VA
+
+python3
+from Process_data import *
+do what it asks for
+
+manually check dupes from last list.
+merge tex files
+update label.tex file to reflect new name
+pdflatex label.tex
+
+print labels and txt sheets onto paper
+rename label.pdf
+
+labels go into printer face DOWN
