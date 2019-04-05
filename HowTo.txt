@@ -3,6 +3,7 @@ grab a_amat.zip and l_amat.zip
 unzip, put in same common folder.
 
 Make note of last date pull and current file date (website)
+Go to end of this file: l_amat/CO.dat to find the last date in the data.
 
 Files needed:
 
