@@ -45,21 +45,17 @@ def zipDist(A,B):
 def findLL(zip):
     if zip in z:
         return (z[zip])
-    temp=[]
-    for e in z:
-        v=2000
-        try:
-            v=abs(int(e)-int(zip))
-        except:
-            pass
-        if v<=1000:
-            temp.append((abs(int(e)-int(zip)), e))
-        temp.sort()
-    if len(temp)==0:
-            print("Failed to find "+zip+" or anything nearby.")
-            return(("0","0"))
-    print("Failed to find "+zip+" using instead: "+temp[0][1])
-    return (z[temp[0][1]])
+    for i in range(1,5000):
+        for j in [-1,1]:
+            fakezip = str(int(zip)+i*j)
+            if len(fakezip)==4:
+                fakezip='0'+fakezip
+            if fakezip in z:
+                print("Using zip: "+fakezip+" instead of "+zip)
+                return(z[fakezip])
+    print("Giving up and using origin for zip")        
+    return(("0","0"))
+
 
 
 
