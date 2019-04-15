@@ -7,14 +7,17 @@ Go to end of this file: l_amat/CO.dat to find the last date in the data.
 
 Files needed:
 
-Process_data.py
+FindNewLocalHams.py
 label.tex
-hamFCC2.py
-MakeZipLists.py
-newaddress.py
-newgrants.py
-unzipzips.py
 zips.csv
+
+NO Process_data.py
+NO hamFCC2.py
+NO MakeZipLists.py
+NO newaddress.py
+NO newgrants.py
+NO unzipzips.py
+
 
 python3
 20700 will be default.  used 17 mile radius.
