@@ -8,7 +8,7 @@ Go to end of this file: l_amat/CO.dat to find the last date in the data.
 Files needed:
 
 FindNewLocalHams.py
-label.tex
+label.tex (only if you want to make LaTex labels)
 zips.csv
 
 NO Process_data.py
