@@ -37,6 +37,15 @@ print("Please wait a minute or two while the entire FCC database is being read."
 #python3
 import re
 
+LAST_DATE_IN_DB=""
+fyle=open('l_amat/CO.dat','r')
+for line in fyle:
+    if len(line)>20:
+        LAST_DATE_IN_DB=line.split('|')[4]
+fyle.close()
+#print(LAST_DATE_IN_DB+" is last date in Database!")
+
+
 lic_class={}
 fyle=open('l_amat/AM.dat','r')
 for line in fyle:
@@ -88,21 +97,22 @@ for line in fyle:
     if(len(temp[6])):
         Lnum[temp[4]]=temp[6]
     if(len(temp[9])):
-        initial[temp[4]]=temp[9]
+        initial[temp[4]]=temp[9].upper()
     if(len(temp[10])):
-        lastname[temp[4]]=temp[10]
+        lastname[temp[4]]=temp[10].upper()
     if(len(temp[11])):
-        suffix[temp[4]]=temp[11]
+        suffix[temp[4]]=temp[11].upper()
     if(len(temp[15])):
-        address[temp[4]]=temp[15]
+        #address[temp[4]]=temp[15].upper()        
+        address[temp[4]]=re.sub(","," ",temp[15].upper())
     if(len(temp[16])):
-        city[temp[4]]=temp[16]
+        city[temp[4]]=temp[16].upper()
     if(len(temp[17])):
         stateLived[temp[4]]=temp[17]
     if(len(temp[18])):
         zipcode[temp[4]]=temp[18][0:5]
     if(len(temp[15])==0) and len(temp[19]):
-        address[temp[4]]="P.O. Box "+str(temp[19])
+        address[temp[4]]="P.O. BOX "+str(temp[19])
     if(len(temp[22])):
         FRN[temp[4]]=temp[22]
 fyle.close()    
@@ -263,16 +273,9 @@ def notTooFar(lic,zip,dist):
 
 def findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate):
   print("We will look for brand new hams in our area!")
-  #cyr=int(input("Give cutoff year: "))
-  #cm=int(input("Give (numerically) cutoff month: "))
-  #cd=int(input("Give cutoff date: "))
-  #cmiles=float(input("Give max miles: "))
-  if czip=='20770':
-      print("Zipcode of 20770 is being used.")
   L=listNew(cm,cd,cyr) #date cutoff here
   print("We found nationally: "+str(len(L))+" new licencees in database.")
   L_close=[]
-  #newNeighbors=input("Give first part of filename for latex file of addresses: ")
   newNeighbors = "NewLocalHams"
   f=open(newNeighbors+".tex","a")
   for e in L:
@@ -284,61 +287,75 @@ def findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate):
   print("We found "+str(len(L_close))+" new licencees nearby!")
   print(L_close)
   closeBook=[]
+  closeBook2=[] #for the csv
   for e in L_close:
          f.write("\lb{ ")     
          record=""
+         record2=""
          try:
             record=record+firstname[e]+" "+initial[e]+" "+lastname[e]+" "
+            record2=record2+firstname[e]+", "+initial[e]+", "+lastname[e]+", "
             f.write(firstname[e]+" "+initial[e]+" "+lastname[e]+" "+e+" \\\\\n")
          except:
             try:
                 record=record+firstname[e]+" "+lastname[e]+" "
+                record2=record2+firstname[e]+",, "+lastname[e]+", "            
                 f.write(firstname[e]+" "+lastname[e]+" "+e+" \\\\\n")
             except:
               try:
                  record=record+initial[e]+" "+lastname[e]+" "
+                 record2=record2+initial[e]+",, "+lastname[e]+", "              
                  f.write(initial[e]+" "+lastname[e]+" "+e+" \\\\\n")
               except:
                  try:
                      record=record+lastname[e]+" "
+                     record2=record2+", , "+lastname[e]+", "             
                      f.write(lastname[e]+" "+e+" \\\\\n")
                  except:
                      record=record+" "+e+" "
+                     record2=record2+", ,  "+e+", "                     
                      f.write(e+" \\\\\n")
          record=record+" ["+e+"] "+lic_class[e]+" - "
+         record2=record2+" "+e+", "+lic_class[e]+" , "         
+         
          try:
             record=record+address[e].upper()+" "
+            record2=record2+address[e].upper()+", "
+            #if address[e].count(",")==0:
+            #    record2=record2+" , "
+            #if address[e].count(",")>=2:
+            #    print("TOO MANY COMMAS IN RECORD FOR "+e)
             f.write(address[e]+" \\\\\n")        
          except:
             pass
          try:
             record=record+city[e].upper()+", "+stateLived[e]+" "+zipcode[e]
+            record2=record2+city[e].upper()+", "+stateLived[e]+", "+zipcode[e]+", NEW\n" 
             f.write(city[e]+", "+stateLived[e]+" "+zipcode[e]+" }\n")        
          except:
             pass
          closeBook.append(record)
+         closeBook2.append(record2)
   closeBook.sort()
+  closeBook2.sort()
   f.close()
   newAndClose="NewLocalHams"
-  #newAndClose=input("Give first part of filename for sorted text list: ")
   f=open(newAndClose+".txt","a")
   for e in closeBook:
       f.write(e)
       f.write("\n")
   f.close()
-  print("Addresses labels not sorted by last name.. . ")
-
+  #print("Addresses labels not sorted by last name.. . ")
+  f=open("NewLocalHams.csv","a")
+  for e in closeBook2:
+      f.write(e)
+  f.close()
+      
 def findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate):
   print("We shall search now for hams who have recently moved into the area!")
-  #cyr=int(input("Give cutoff year: "))
-  #cm=int(input("Give (numerically) cutoff month: "))
-  #cd=int(input("Give cutoff date: "))
-  #cmiles=float(input("Give max miles: "))
-  #print("Default zipcode of 20770 is being used.")
   L=listNewAddress(cm,cd,cyr) #date cutoff here
   print("We found nationally: "+str(len(L))+" new addresses in database.")
   L_close=[]
-  #newNeighbors=input("Give first part of filename for latex file of addresses: ")
   newNeighbors='NewLocalHams'
   f=open(newNeighbors+".tex","a")
 
@@ -358,42 +375,58 @@ def findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate):
   print("We found "+str(len(L_close2))+" hams who moved out of area to this area.")
   print(L_close2)
   closeBook=[]
+  closeBook2=[]
   for e in L_close2:
          f.write("\lb{ ")     
          record=""
+         record2=""
          try:
             record=record+firstname[e]+" "+initial[e]+" "+lastname[e]+" "
+            record2=record2+firstname[e]+", "+initial[e]+", "+lastname[e]+", "
             f.write(firstname[e]+" "+initial[e]+" "+lastname[e]+" "+e+" \\\\\n")
          except:
             try:
                 record=record+firstname[e]+" "+lastname[e]+" "
+                record2=record2+firstname[e]+",, "+lastname[e]+", "            
                 f.write(firstname[e]+" "+lastname[e]+" "+e+" \\\\\n")
             except:
               try:
                  record=record+initial[e]+" "+lastname[e]+" "
+                 record2=record2+initial[e]+",, "+lastname[e]+", "              
                  f.write(initial[e]+" "+lastname[e]+" "+e+" \\\\\n")
               except:
                  try:
                      record=record+lastname[e]+" "
+                     record2=record2+", , "+lastname[e]+", "             
                      f.write(lastname[e]+" "+e+" \\\\\n")
                  except:
                      record=record+" "+e+" "
+                     record2=record2+", , "+e+", "                     
                      f.write(e+" \\\\\n")
          record=record+" ["+e+"] "+lic_class[e]+" - "
+         record2=record2+" "+e+", "+lic_class[e]+" , "         
+         
          try:
             record=record+address[e].upper()+" "
+            record2=record2+address[e].upper()+", "
+            #if address[e].count(",")==0:
+            #    record2=record2+" , "
+            #if address[e].count(",")>=2:
+            #    print("TOO MANY COMMAS IN RECORD FOR "+e)            
             f.write(address[e]+" \\\\\n")        
          except:
             pass
          try:
             record=record+city[e].upper()+", "+stateLived[e]+" "+zipcode[e]
+            record2=record2+city[e].upper()+", "+stateLived[e]+", "+zipcode[e]+", MOVED-IN\n" 
             f.write(city[e]+", "+stateLived[e]+" "+zipcode[e]+" }\n")        
          except:
             pass
          closeBook.append(record)
+         closeBook2.append(record2)
   closeBook.sort()
+  closeBook2.sort()
   f.close()
-  #newAndClose=input("Give first part of filename for sorted text list: ")
   newAndClose="NewLocalHams"
   f=open(newAndClose+".txt","a")
   f.write("-------------   new move-ins below ---------------\n")
@@ -401,9 +434,21 @@ def findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate):
       f.write(e)
       f.write("\n")
   f.close()
-  #print("Addresses labels not sorted by last name.. . ")
+
+  f=open("NewLocalHams.csv","a")
+  for e in closeBook2:
+      f.write(e)
+  f.close()
+
+#If this works, I'll be happy
 
 
+
+
+
+
+
+  
 def isActuallyNewArrival(call,dist,czip):
     z=zipLists[Lnum[call]]
     if len(z)>2:
@@ -421,7 +466,11 @@ if reply=="Y" or reply=="y":
     cyr=int(input("Give cutoff year: "))
     cm=int(input("Give (numerically) cutoff month: "))
     cd=int(input("Give cutoff date: "))
-    cmiles=float(input("Give max miles: "))
+    cmiles=input("Give max miles or hit enter to use 17 miles: ")
+    if cmiles=="":
+        cmiles=17
+    else:
+        cmiles=float(cmiles)
     print("Enter zipcode below or hit enter to default to 20770")
     czip=input("Give zipcode for center: ")
     if czip=="":
@@ -435,9 +484,16 @@ if reply=="Y" or reply=="y":
     f=open("NewLocalHams.txt","w")
     f.write("New Local Hams: "+str(cmiles)+" miles away from "+czip+" "+ourstate+"\n")
     f.write("Start date: "+str(cm)+"/"+str(cd)+"/"+str(cyr)+"\n")
-    f.close();
+    f.write("Last date in Database: "+LAST_DATE_IN_DB+"\n")
+    f.close()
     f=open("NewLocalHams.tex","w")
-    f.close();
+    f.write("% New Local Hams: "+str(cmiles)+" miles away from "+czip+" "+ourstate+"\n")
+    f.write("% Start date: "+str(cm)+"/"+str(cd)+"/"+str(cyr)+"\n")
+    f.write("% Last date in Database: "+LAST_DATE_IN_DB+"\n")
+    f.close()
+    f=open("NewLocalHams.csv","w")
+    f.write("FIRST, MI, LAST, CALL, CLASS, ADDRESS, CITY, STATE, ZIP, NEW/MOVE\n")
+    f.close()
         
     findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate)
     findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate)
