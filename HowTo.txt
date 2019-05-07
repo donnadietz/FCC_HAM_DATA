@@ -24,7 +24,7 @@ python3
 This code cuts out DC/VA
 
 python3
-from Process_data import *
+from FindNewLocalHams import *
 do what it asks for
 
 manually check dupes from last list.
