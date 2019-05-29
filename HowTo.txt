@@ -10,6 +10,7 @@ Files needed:
 FindNewLocalHams.py
 label.tex (only if you want to make LaTex labels)
 zips.csv
+GenderOfNames.txt (only if doing name/gender analysis, not needed for finding new hams.)
 
 NO Process_data.py
 NO hamFCC2.py
