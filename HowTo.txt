@@ -10,30 +10,24 @@ Files needed:
 FindNewLocalHams.py
 label.tex (only if you want to make LaTex labels)
 zips.csv
-GenderOfNames.txt (only if doing name/gender analysis, not needed for finding new hams.)
-
-NO Process_data.py
-NO hamFCC2.py
-NO MakeZipLists.py
-NO newaddress.py
-NO newgrants.py
-NO unzipzips.py
+HowTo.txt  (if you want the instructions locally)
 
 
-python3
+I use python3
 20700 will be default.  used 17 mile radius.
 This code cuts out DC/VA
 
+At your commpand prompt, type:
 python3
+Inside python3, type:
 from FindNewLocalHams import *
-do what it asks for
+Then, do what it asks.
 
-manually check dupes from last list.
-merge tex files
-update label.tex file to reflect new name
+Inside NewLocalHams, replace all # symbols with \#
+To create labels, type
 pdflatex label.tex
 
-print labels and txt sheets onto paper
-rename label.pdf
+print labels and txt sheets onto paper, also maybe csv
+rename label.pdf if you wish
 
 labels go into printer face DOWN
