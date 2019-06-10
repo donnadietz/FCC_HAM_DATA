@@ -3,7 +3,7 @@ https://www.fcc.gov/uls/transactions/daily-weekly#fcc-uls-transaction-files-week
 grab a_amat.zip and l_amat.zip  (Amateur Licenses and Applications)
 unzip, put in same common folder.
 
-Make note of last date pull and current file date (website)
+Optional: Make note of last date pull and current file date (website)
 Go to end of this file: l_amat/CO.dat to find the last date in the data.
 
 Files needed:
@@ -31,4 +31,4 @@ pdflatex label.tex
 print labels and txt sheets onto paper, also maybe csv
 rename label.pdf if you wish
 
-labels go into printer face DOWN
+labels go into (my) printer face DOWN
