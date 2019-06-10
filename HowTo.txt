@@ -20,11 +20,13 @@ This code cuts out DC/VA
 
 At your commpand prompt, type:
 python3
-Inside python3, type:
-from FindNewLocalHams import *
+Inside python3, type:  (Don't type >)
+> from FindNewLocalHams import *
 Then, do what it asks.
+To exit python just type:
+> quit()
 
-Inside NewLocalHams, replace all # symbols with \#
+Inside NewLocalHams.tex, replace all # symbols with \#
 To create labels, type
 pdflatex label.tex
 
