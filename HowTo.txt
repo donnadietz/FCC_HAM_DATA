@@ -1,5 +1,6 @@
-from wireless.fcc.gov/uls/index.htm?job=transaction&page=weekly
-grab a_amat.zip and l_amat.zip
+from 
+https://www.fcc.gov/uls/transactions/daily-weekly#fcc-uls-transaction-files-weekly  
+grab a_amat.zip and l_amat.zip  (Amateur Licenses and Applications)
 unzip, put in same common folder.
 
 Make note of last date pull and current file date (website)
