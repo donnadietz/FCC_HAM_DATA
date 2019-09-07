@@ -1,0 +1,11 @@
+To mail merge on MS Word:
+open template letter
+Mailings/Start Mail Merge/letters
+Select recipients / use exisiting
+   switch All Data Sources drop-down to All Files
+   navigate to the csv data file
+   open it
+Click Preview.  Option: Can insert (adjust) merge fields
+Edit recipient list if desired to get rid of bad lines (but it didn't work anyhow)
+Finish and merge / edit individual docs (all) [OK]
+File Export to PDF
