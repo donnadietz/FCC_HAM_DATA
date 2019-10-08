@@ -5,7 +5,24 @@ Select recipients / use exisiting
    switch All Data Sources drop-down to All Files
    navigate to the csv data file
    open it
-Click Preview.  Option: Can insert (adjust) merge fields
+Click Preview Results.  Option: Can insert (adjust) merge fields
 Edit recipient list if desired to get rid of bad lines (but it didn't work anyhow)
 Finish and merge / edit individual docs (all) [OK]
 File Export to PDF
+
+
+To make labels:
+Open blank
+Mailings
+Start Mail Merge
+Labels
+Choose correct label template
+Select recipients / use exisiting
+   switch All Data Sources drop-down to All Files
+   navigate to the csv data file
+   open it
+Click Preview Results.
+Finish/Merge
+Edit individual.... All  OK
+Print to PDF.
+(Except that fails)

@@ -1,4 +1,5 @@
 #Donna Dietz N2SZ donna.dietz@gmail.com
+#Oct 2019
 #April 2019
 #Jan 2019
 #May 2018
@@ -272,6 +273,7 @@ def notTooFar(lic,zip,dist):
 
 
 def findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate):
+  #I'm going to ignore ourstate!!!
   print("We will look for brand new hams in our area!")
   L=listNew(cm,cd,cyr) #date cutoff here
   print("We found nationally: "+str(len(L))+" new licencees in database.")
@@ -280,7 +282,7 @@ def findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate):
   f=open(newNeighbors+".tex","a")
   for e in L:
     try:     
-      if stateLived[e]==ourstate and notTooFar(e,czip,cmiles): #zip=Greenbelt, distance in miles
+      if notTooFar(e,czip,cmiles): #zip=Greenbelt, distance in miles  (optional and stateLived[e]==ourstate)
              L_close.append(e)
     except:
       pass
@@ -352,6 +354,7 @@ def findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate):
   f.close()
       
 def findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate):
+  #Ignore ourstate!  
   print("We shall search now for hams who have recently moved into the area!")
   L=listNewAddress(cm,cd,cyr) #date cutoff here
   print("We found nationally: "+str(len(L))+" new addresses in database.")
@@ -361,7 +364,7 @@ def findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate):
 
   for e in L:
     try:     
-      if stateLived[e]==ourstate and notTooFar(e,czip,cmiles): #zip=Greenbelt, distance in miles
+      if notTooFar(e,czip,cmiles): #zip=Greenbelt, distance in miles (optional and stateLived[e]==ourstate)
              L_close.append(e)
     except:
       pass
