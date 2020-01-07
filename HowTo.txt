@@ -6,7 +6,7 @@ unzip, put in same common folder with the code and other files from the GitHub r
 Note: It's the weekly database files, not the daily ones, at bottom of page.
 
 Optional: Make note of last date pull and current file date (website)
-Go to end of this file: l_amat/CO.dat to find the last date in the data.
+Go to end of this file: l_amat/HD.dat to find the last date in the data.
 
 Files needed:
 
