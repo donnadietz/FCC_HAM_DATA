@@ -1,4 +1,5 @@
 #Donna Dietz N2SZ donna.dietz@gmail.com
+#Feb 2020
 #Oct 2019
 #April 2019
 #Jan 2019
@@ -48,6 +49,9 @@ fyle.close()
 
 
 lic_class={}
+# Here, I create my first dictionary!  Yay!
+# Key is callsign  (temp[4] in this case)
+
 fyle=open('l_amat/AM.dat','r')
 for line in fyle:
     temp=line.split('|')
@@ -57,6 +61,9 @@ fyle.close()
 
 active={}
 HAHV={}
+
+# Two more dictionaries, also call for key.  Note the pattern?
+
 fyle=open('l_amat/HD.dat','r')
 for line in fyle:
     temp=line.split('|')
@@ -70,7 +77,7 @@ firstname={}
 initial={}
 suffix={}
 stateLived={}
-FRN={}
+FRN={}          #NOTE: FRN is a better ID than Call FWIW
 Lnum={}
 address={}
 city={}
@@ -119,7 +126,8 @@ for line in fyle:
 fyle.close()    
 
 
-calls=list(FRN.keys()) 
+calls=list(FRN.keys()) # I need a list of calls. I use it for all my keys.
+                       # so I should have a list of them, right?   
 
 for i in range(len(calls)):
     if calls[i] in address and address[calls[i]][0:6].upper()=="PO BOX":
@@ -130,7 +138,7 @@ for i in range(len(calls)):
 
 #end of hamFCC2, start unzipzips.
 
-f=open("zips.csv","r")
+f=open("zips.csv","r")   # Dictionary to convert zip (string) to lat/lon
 d=[]
 for l in f:
     d.append(l[:-1])
@@ -174,7 +182,7 @@ def zipDist(A,B):
     (r,s)=findLL(B)
     return calcDist(p,q,r,s)
 
-def findLL(zip):
+def findLL(zip):   # Well some zips don't exist so this is a hack.
     if zip in z:
         return (z[zip])
     for i in range(1,5000):
@@ -183,14 +191,14 @@ def findLL(zip):
             if len(fakezip)==4:
                 fakezip='0'+fakezip
             if fakezip in z:
-                print("Using zip: "+fakezip+" instead of "+zip)
+                #print("Using zip: "+fakezip+" instead of "+zip)
                 return(z[fakezip])
     print("Giving up and using origin for zip")        
     return(("0","0"))
 
 #End unzipzips start newgrants
 
-grant={}
+grant={}            # Create dictionary call -> date
 fyle=open('l_amat/HS.dat','r')
 for line in fyle:
     temp=line.split('|')
@@ -200,7 +208,7 @@ fyle.close()
 
 def listNew(m,d,yr):
     L=[]
-    k=grant.keys()
+    k=grant.keys()  # a list...
     for e in k:
         d2=grant[e]
         Date=d2.split("/")
@@ -225,15 +233,15 @@ fyle.close()
 
 for e in d:
     temp=e.split('|')
-    try:
+    try:                              # I don't recall why, but it's a hack.
        if not temp[6] in zipLists:
            try:
-               zipLists[temp[6]]=[temp[18][0:5]]
+               zipLists[temp[6]]=[temp[18][0:5]]  #temp[6] is like L00132...
            except:
                pass
        else:
            try:
-               zipLists[temp[6]].append(temp[18][0:5])
+               zipLists[temp[6]].append(temp[18][0:5])  #temp[1][0:5] is zip
            except:
                pass
     except:
@@ -241,7 +249,7 @@ for e in d:
 
 #end MakeZipLists start newaddress
 
-newAddress={}
+newAddress={}    # Find all new addresses in whole database
 fyle=open('l_amat/HS.dat','r')
 for line in fyle:
     temp=line.split('|')
@@ -272,13 +280,13 @@ def notTooFar(lic,zip,dist):
        return zipDist(z1,zip)<=dist
 
 
-def findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate):
+def findNewGrantsNearby(cyr,cm,cd,cmiles,czip):
   #I'm going to ignore ourstate!!!
   print("We will look for brand new hams in our area!")
   L=listNew(cm,cd,cyr) #date cutoff here
   print("We found nationally: "+str(len(L))+" new licencees in database.")
   L_close=[]
-  newNeighbors = "NewLocalHams"
+  newNeighbors = "NewLocalHams"      # Use this common file to store hits.
   f=open(newNeighbors+".tex","a")
   for e in L:
     try:     
@@ -353,14 +361,14 @@ def findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate):
       f.write(e)
   f.close()
       
-def findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate):
+def findNewMoveInsNearby(cyr,cm,cd,cmiles,czip):
   #Ignore ourstate!  
   print("We shall search now for hams who have recently moved into the area!")
   L=listNewAddress(cm,cd,cyr) #date cutoff here
   print("We found nationally: "+str(len(L))+" new addresses in database.")
   L_close=[]
-  newNeighbors='NewLocalHams'
-  f=open(newNeighbors+".tex","a")
+  newNeighbors='NewLocalHams'    # Use this common file to store hits.
+  f=open(newNeighbors+".tex","a")# Code was copy/paste. Inefficient. Sorry!
 
   for e in L:
     try:     
@@ -463,12 +471,25 @@ def isActuallyNewArrival(call,dist,czip):
     return None
 
 
+#----------------------------------START OF USER INTERACTIONS
+import time
+
 reply=input("Do you want to run lists? (Y/N): ")
-if reply=="Y" or reply=="y":
+if reply=="Y" or reply=="y" or reply=="":
     print("New files 'NewLocalHams.txt' and 'NewLocalHams.tex' will be written/overwritten (unless you abort this code now).")
-    cyr=int(input("Give cutoff year: "))
-    cm=int(input("Give (numerically) cutoff month: "))
-    cd=int(input("Give cutoff date: "))
+    cyr=input("Give cutoff year: ")
+    if cyr=="":
+        temp=time.asctime()
+        cyr=temp.split()[-1]
+    cyr=int(cyr)    
+    cm=input("Give (numerically) cutoff month: ")
+    if cm=="":
+        cm=1
+    cm=int(cm)    
+    cd=input("Give cutoff date: ")
+    if cd=="":
+        cd=1
+    cd=int(cd)    
     cmiles=input("Give max miles or hit enter to use 17 miles: ")
     if cmiles=="":
         cmiles=17
@@ -479,18 +500,18 @@ if reply=="Y" or reply=="y":
     if czip=="":
         print("Default zipcode of 20770 is being used.")
         czip="20770"
-    print("Enter state 2-digit code  below or hit enter to default to 'MD' ")
-    ourstate=input("Give state: ")
-    if ourstate=="":
-        print("Default state of 'MD' is being used.")
-        ourstate="MD"
+    #print("Enter state 2-digit code  below or hit enter to default to 'MD' ")
+    #ourstate=input("Give state: ")
+    #if ourstate=="":
+    #    print("Default state of 'MD' is being used.")
+    #    ourstate="MD"
     f=open("NewLocalHams.txt","w")
-    f.write("New Local Hams: "+str(cmiles)+" miles away from "+czip+" "+ourstate+"\n")
+    f.write("New Local Hams: "+str(cmiles)+" miles away from "+czip+"\n")
     f.write("Start date: "+str(cm)+"/"+str(cd)+"/"+str(cyr)+"\n")
     f.write("Last date in Database: "+LAST_DATE_IN_DB+"\n")
     f.close()
     f=open("NewLocalHams.tex","w")
-    f.write("% New Local Hams: "+str(cmiles)+" miles away from "+czip+" "+ourstate+"\n")
+    f.write("% New Local Hams: "+str(cmiles)+" miles away from "+czip+"\n")
     f.write("% Start date: "+str(cm)+"/"+str(cd)+"/"+str(cyr)+"\n")
     f.write("% Last date in Database: "+LAST_DATE_IN_DB+"\n")
     f.close()
@@ -498,8 +519,72 @@ if reply=="Y" or reply=="y":
     f.write("FIRST, MI, LAST, CALL, CLASS, ADDRESS, CITY, STATE, ZIP, NEW/MOVE\n")
     f.close()
         
-    findNewGrantsNearby(cyr,cm,cd,cmiles,czip,ourstate)
-    findNewMoveInsNearby(cyr,cm,cd,cmiles,czip,ourstate)
+    findNewGrantsNearby(cyr,cm,cd,cmiles,czip)
+    findNewMoveInsNearby(cyr,cm,cd,cmiles,czip)
 
+    #myinput=input("You are at line 514")
+    print("Now, trying to alphabetize everything!")
+    
+    f=open("NewLocalHams.csv","r")
+    d=[]
+    for lyne in f:
+        d.append(lyne[:-1])
+    f.close()
 
+    hold=[]
+    for i in range(1,len(d)):
+        hold.append((d[i].split(',')[2], d[i]))
+    hold.sort()
 
+    f=open("NewLocalHams.csv","w") #Ruin the old one!!!
+    f.write(d[0])
+    f.write("\n")
+    for i in range(len(hold)):
+        f.write(hold[i][1])
+        f.write("\n")
+    f.close()
+
+    #  Ok, if that works, let's try the tex file now!
+
+    f=open("NewLocalHams.tex","r")
+    d=[]
+    for lyne in f:
+        d.append(lyne[:-1])
+    f.close()
+
+    for i in range(3, len(d)):
+        if '#' in d[i]:
+            t=""
+            for j in range(len(d[i])):
+                if d[i][j]=="#":
+                    t=t+'\#'
+                else:
+                    t=t+d[i][j]
+            d[i]=t
+
+    hold=[]
+    for i in range(3,len(d),3):
+            temp=d[i].split(' ')
+            if len(temp)>2:
+                hold.append((temp[-3], d[i], d[i+1], d[i+2])) 
+    hold.sort()
+
+    f=open("NewLocalHams.tex","w") #Ruin the old one!!!
+    f.write(d[0])
+    f.write("\n")
+    f.write(d[1])
+    f.write("\n")
+    f.write(d[2])
+    f.write("\n")
+
+    for i in range(len(hold)):
+        f.write(hold[i][1])
+        f.write("\n")
+        f.write(hold[i][2])
+        f.write("\n")
+        f.write(hold[i][3])
+        f.write("\n")
+    
+    f.close()
+
+# If we are really lucky, this all worked!
