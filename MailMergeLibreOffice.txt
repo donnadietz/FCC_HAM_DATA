@@ -1,0 +1,4 @@
+Start by using Mail Merge Wizard to get new data into the document.
+Then bail. 
+Insert > Field > More Fields ...  expand database.
+Then return to Mail Merge Wizard and redo. 
