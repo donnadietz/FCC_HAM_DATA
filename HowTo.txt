@@ -34,6 +34,8 @@ To exit python just type:
 What is produced:
 NewLocalHams.csv to be used in Office software to read in the names/addresses etc.
 NewLocalHams.txt human readable summary
-NewLocalHams.tex for Latex Labels.
+NewLocalHams.tex for use with making Latex Labels.
+  pdflatex label.tex 
+  should provide label.pdf with labels.
 
 I'm still adjusting the instructions beyond this.  It is system dependent after this point.
