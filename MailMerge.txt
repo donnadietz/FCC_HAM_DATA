@@ -5,6 +5,11 @@ Select recipients / use exisiting
    switch All Data Sources drop-down to All Files
    navigate to the csv data file
    open it
+   
+Then, actually, I open Mail Wizard and go from there.
+These remaining instructions may or may not help!
+I print to a PDF so I can sanity check it before wasting the paper!   
+   
 Click Preview Results.  Option: Can insert (adjust) merge fields
 Edit recipient list if desired to get rid of bad lines (but it didn't work anyhow)
 Finish and merge / edit individual docs (all) [OK]
