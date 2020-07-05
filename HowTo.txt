@@ -1,7 +1,8 @@
 from 
 https://www.fcc.gov/uls/transactions/daily-weekly#fcc-uls-transaction-files-weekly  
 grab a_amat.zip and l_amat.zip  (Amateur Licenses and Applications)
-unzip, put in same common folder with the code and other files from the GitHub repo.  (So main file with code will have two subfolders called a_amat and l_amat.)
+unzip, put in same common folder with the code and other files from the GitHub repo.  
+(So main folder with code will have two subfolders called a_amat and l_amat.)
 
 Note: It's the weekly database files, not the daily ones, at bottom of page.
 
