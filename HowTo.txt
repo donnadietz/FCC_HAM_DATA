@@ -4,10 +4,11 @@ grab a_amat.zip and l_amat.zip  (Amateur Licenses and Applications)
 unzip, put in same common folder with the code and other files from the GitHub repo.  
 (So main folder with code will have two subfolders called a_amat and l_amat.)
 
-Note: It's the weekly database files, not the daily ones, at bottom of page.
+Note: It's the weekly database files (not the daily ones), at bottom of page.
 
 Optional: Make note of last date pull and current file date (website)
 Go to end of this file: l_amat/HD.dat to find the last date in the data.
+The one found by the code isn't always correct (nor is this hack).
 
 Files needed:
 
@@ -28,3 +29,11 @@ Inside python3, type:  (Don't type >)
 Then, do what it asks.
 To exit python just type:
 > quit()
+
+
+What is produced:
+NewLocalHams.csv to be used in Office software to read in the names/addresses etc.
+NewLocalHams.txt human readable summary
+NewLocalHams.tex for Latex Labels.
+
+I'm still adjusting the instructions beyond this.  It is system dependent after this point.
