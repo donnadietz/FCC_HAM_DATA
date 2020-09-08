@@ -42,9 +42,11 @@ import re
 LAST_DATE_IN_DB=""
 fyle=open('l_amat/CO.dat','r')
 for line in fyle:
-    if len(line)>20:
+    myline = line
+fyle.close()    
+if len(myline)>20:
         LAST_DATE_IN_DB=line.split('|')[4]
-fyle.close()
+
 #print(LAST_DATE_IN_DB+" is last date in Database!")
 
 
