@@ -7,6 +7,12 @@ Select recipients / use exisiting
    open it
    
 Then, actually, I open Mail Wizard and go from there.
+
+"Start Mail Merge"/ Step-by-Step Mail Merge Wizard:
+On step 4 click "More Items".  Make sure mouse is in right location.
+Close box each time.
+In step 6 "print" then choose pdf printer (print to desktop)
+
 These remaining instructions may or may not help!
 I print to a PDF so I can sanity check it before wasting the paper!   
    
