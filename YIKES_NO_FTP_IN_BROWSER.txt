@@ -1,0 +1,46 @@
+Yikes, Firefox stopped allowing FTP.  I am not happy about that. 
+I was able to get the files through command-line ftp.
+First, I installed ftp. To open, I type "ftp" then
+
+ftp> open wirelessftp.fcc.gov
+Connected to wirelessftp.fcc.gov.
+220-You are entering an Official United States Government System, which may be used
+220-only for authorized purposes. Unauthorized modification of any information stored
+220-on this system may result in criminal prosecution. The Government may monitor
+220-and audit the usage of this system, and all persons are hereby notified that use
+220- of this system constitutes consent to such monitoring and auditing
+220 
+Name (wirelessftp.fcc.gov:dietz): anonymous
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+
+ftp> cd pub
+250 Directory successfully changed.
+ftp> cd uls
+250 Directory successfully changed.
+ftp> cd complete
+250 Directory successfully changed.
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+
+(I'm not copying that!)
+
+226 Directory send OK.
+ftp> get a_amat.zip
+local: a_amat.zip remote: a_amat.zip
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for a_amat.zip (293288320 bytes).
+226 Transfer complete.
+293288320 bytes received in 127.18 secs (2.1993 MB/s)
+ftp> get l_amat.zip
+local: l_amat.zip remote: l_amat.zip
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for l_amat.zip (152403985 bytes).
+226 Transfer complete.
+152403985 bytes received in 63.85 secs (2.2765 MB/s)
+
+
