@@ -5,3 +5,6 @@ has recently gotten their license in your area or moved in to town. Then clubs c
 join their clubs!
 
 https://www.fcc.gov/uls/transactions/daily-weekly#fcc-uls-transaction-files-weekly 
+
+YouTube video to show how to use this (because I'm too lazy to make real instructions...)
+https://youtu.be/WmOc4HtcdXQ
