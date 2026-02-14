@@ -1,10 +1,11 @@
 #Donna Dietz N2SZ donna.dietz@gmail.com
-#Jan 2026
+#Feb 2026
 
 print("Thank you for using my Python Script! Help me debug it! donna.dietz@gmail.com N2SZ")
 print("Please wait a minute or two while the entire FCC database is being read.")
 print("This code attempts to find hams in given state w/in specified center/radius of zip provided.")
 
+print("To create labels from provided tex code, change target file to 'LocalHams.tex' in 'label.tex'. ")
 
 #http://wireless.fcc.gov/uls/index.htm?job=transaction&page=weekly
 #grab both amateur zipped files
@@ -34,6 +35,9 @@ print("This code attempts to find hams in given state w/in specified center/radi
 
 #python3
 import re
+from pathlib import Path
+
+RemovalSet=set()  #From "Removals.txt" 
 
 LAST_DATE_IN_DB=""
 fyle=open('l_amat/CO.dat','r')
@@ -291,13 +295,17 @@ def findHamsNearby(cmiles,czip):
   f=open(Neighbors+".tex","a")
   for e in calls:  #DITCHING "PEOPLE" without names... usually clubs. or addresses...
     try:           #I know ... I'm being too picky! :)
-      if (e in lastname) and (active[e]=='A') and notTooFar(e,czip,cmiles) and stateLived[e]==ourstate and len(address[e].strip(" "))>0: #zip=Greenbelt, distance in miles 
+      if (not (e in RemovalSet)) and (e in lastname) and (active[e]=='A') and notTooFar(e,czip,cmiles) and stateLived[e]==ourstate and len(address[e].strip(" "))>0: #zip=Greenbelt, distance in miles 
              L_close.append(e)
     except:
         
       pass
   print("We found "+str(len(L_close))+" licencees nearby!")
+  print("I have removed any removals of which there are "+str(len(list(RemovalSet)))+" in the list." )
+  #print(len(list(RemovalSet)))
   print(L_close)
+  
+  
   closeBook=[]
   closeBook2=[] #for the csv
   for e in L_close:
@@ -377,6 +385,7 @@ import time
 reply=input("Do you want to run lists to look for local hams? (Y/N): ")
 if reply=="Y" or reply=="y" or reply=="":
     print("New files 'LocalHams.txt' and 'LocalHams.tex' will be written/overwritten (unless you abort this code now).")
+    print("If you wish to remove hams from list, put them in a file 'Removals.txt' one per line. ")
     '''
     cyr=input("Give cutoff year: ")
     if cyr=="":
@@ -397,11 +406,11 @@ if reply=="Y" or reply=="y" or reply=="":
         cmiles=17
     else:
         cmiles=float(cmiles)
-    print("Enter zipcode below or hit enter to default to 20770")
+    print("Enter zipcode below or hit enter to default to 20742")
     czip=input("Give zipcode for center: ")
     if czip=="":
-        print("Default zipcode of 20770 is being used.")
-        czip="20770"
+        print("Default zipcode of 20742 is being used.")
+        czip="20742"
     #Will you look only in your state or all nearby hams?    
     print("Enter state 2-digit code  below or hit enter to default to 'MD' ")
     ourstate=input("Give state: ")
@@ -421,6 +430,12 @@ if reply=="Y" or reply=="y" or reply=="":
     f=open("LocalHams.csv","w")
     f.write("FIRST, MI, LAST, CALL, CLASS, ADDRESS, CITY, STATE, ZIP \n")
     f.close()
+
+    #RemovalSet=set()
+    if Path("Removals.txt").is_file():
+        f=open("Removals.txt","r")
+        for lyne in f:
+            RemovalSet.add(lyne[:-1])
         
     findHamsNearby(cmiles,czip)  #fills appropriate globals hopefully
 
